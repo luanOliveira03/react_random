@@ -1,20 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { View, Button, Text, StyleSheet } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const styles = StyleSheet.create({ // Folha de estilo
+  button: {
+    marginBottom: 100,
+    color: 'black',
+    backgroundColor: 'black',
+    padding: 40,
+    borderRadius: 5
+  },
+  number: {
+    fontSize: 50,
+    fontFamily: 'Times New Roman',
+  }
+});
+
+class RandomNumbers extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      numbers: []
+    };
+  }
+
+  calcular = () => {
+    const min = 20; // valor mínimo
+    const max = 40; // valor máximo
+    const numbers = [];
+
+    for (let i = 0; i < 5; i++) {
+      const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+      numbers.push(randomNumber);
+    }
+
+    this.setState({ numbers });
+  }
+
+  render() {
+    return (
+      <View>
+        <Button title="Gerar números" onPress={this.calcular} style={styles.button} />
+        {this.state.numbers.map((number, index) => (
+          <Text key={index} style={styles.number}>{number}</Text>
+        ))}
+      </View>
+    );
+  }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default RandomNumbers;
